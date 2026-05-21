@@ -8,6 +8,7 @@ import path from 'path';
     const config = {
         port : process.env.PORT,
         connectString : process.env.CONNECTION_STRING,
+        jwtSecret : process.env.JWT_SECRET,
     }
 
     export default config

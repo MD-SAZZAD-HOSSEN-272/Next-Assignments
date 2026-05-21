@@ -1,17 +1,18 @@
 import type { Request, Response } from "express";
-import { usersService } from "./users.service";
 import sendResponse from "../../utility/sendResponse";
+import { issuesService } from "./issues.service";
 
-const createUsers = async(req : Request, res : Response) => {
-    
+const createIssues = async(req : Request, res : Response) => {
     try {
-        const result = await usersService.usersCreateIntoDB(req.body)
+        const data = req.user
+
+        const result = await issuesService.createIssueIntoDB({...req.body, data})
 
         sendResponse(res, {
             statusCode: 201,
             success: true,
             message: 'User registered successfully',
-            data: result.rows[0]
+            data: result
         })
     } catch (error : any) {
         sendResponse(res, {
@@ -24,7 +25,6 @@ const createUsers = async(req : Request, res : Response) => {
 }
 
 
-
-export const usersController = {
-    createUsers,
+export const issuesController = {
+    createIssues,
 }

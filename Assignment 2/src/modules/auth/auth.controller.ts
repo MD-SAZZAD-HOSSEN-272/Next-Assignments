@@ -1,17 +1,16 @@
 import type { Request, Response } from "express";
-import { usersService } from "./users.service";
 import sendResponse from "../../utility/sendResponse";
+import { authService } from "./auth.service";
 
-const createUsers = async(req : Request, res : Response) => {
-    
-    try {
-        const result = await usersService.usersCreateIntoDB(req.body)
+const signInUser = async(req : Request, res : Response) => {
+     try {
+        const result = await authService.authFromDb(req.body)
 
         sendResponse(res, {
-            statusCode: 201,
+            statusCode: 200,
             success: true,
-            message: 'User registered successfully',
-            data: result.rows[0]
+            message: 'Login successful',
+            data: result
         })
     } catch (error : any) {
         sendResponse(res, {
@@ -24,7 +23,6 @@ const createUsers = async(req : Request, res : Response) => {
 }
 
 
-
-export const usersController = {
-    createUsers,
+export const authController= {
+    signInUser
 }
