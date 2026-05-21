@@ -11,8 +11,8 @@ const createIssues = async(req : Request, res : Response) => {
         sendResponse(res, {
             statusCode: 201,
             success: true,
-            message: 'User registered successfully',
-            data: result
+            message: 'Issue create successfully',
+            data: result.rows[0]
         })
     } catch (error : any) {
         sendResponse(res, {
