@@ -20,26 +20,26 @@ export const initDB = async() => {
             `)
 
        await pool.query(`
-  CREATE TABLE IF NOT EXISTS issues (
-    id SERIAL PRIMARY KEY,
+            CREATE TABLE IF NOT EXISTS issues (
+                id SERIAL PRIMARY KEY,
 
-    title VARCHAR(150) NOT NULL,
+                title VARCHAR(150) NOT NULL,
 
-    description TEXT NOT NULL CHECK (length(description) >= 20),
+                description TEXT NOT NULL CHECK (length(description) >= 20),
 
-    type TEXT CHECK (type IN ('bug', 'feature_request')) DEFAULT 'bug',
+                type TEXT CHECK (type IN ('bug', 'feature_request')) DEFAULT 'bug',
 
-    status TEXT CHECK (
-      status IN ('open', 'closed', 'in_progress')
-    ) DEFAULT 'open',
+                status TEXT CHECK (
+                status IN ('open', 'resolved', 'in_progress')
+                ) DEFAULT 'open',
 
-    reporter_id INTEGER NOT NULL,
+                reporter_id INTEGER NOT NULL,
 
-    created_at TIMESTAMP DEFAULT NOW(),
+                created_at TIMESTAMP DEFAULT NOW(),
 
-    updated_at TIMESTAMP DEFAULT NOW()
-  )
-`);
+                updated_at TIMESTAMP DEFAULT NOW()
+            )
+        `);
     } catch (error) {
         console.log(error, 'from db')
     }

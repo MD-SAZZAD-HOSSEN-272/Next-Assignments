@@ -41,7 +41,6 @@ export const authVerify = (...roles: string[]) =>async (req: Request,res: Respon
         [decoded.email],
       );
 
-      console.log(userData, decoded)
       if (userData.rows.length === 0) {
         sendResponse(res, {
               statusCode: 404,
