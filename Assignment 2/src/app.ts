@@ -3,6 +3,7 @@ import cors from "cors"
 import { userRoute } from './modules/users/users.route';
 import { authRouter } from './modules/auth/auth.route';
 import { issuesRoute } from './modules/issues/issues.route';
+import globalError from './middleware/globalError';
 
 const app = express();
 
@@ -17,6 +18,12 @@ app.get('/', async (req : Request, res : Response) => {
 app.use('/api/auth', userRoute)
 app.use('/api/auth', authRouter)
 app.use('/api/issues', issuesRoute)
+
+
+
+// golobal error
+
+app.use(globalError)
 
 
 

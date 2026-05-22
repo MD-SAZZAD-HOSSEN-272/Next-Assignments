@@ -38,6 +38,8 @@ const getAllUserFromDB = async (payload: any) => {
             query = query + `WHERE ${conditions.join(" AND ")}`
         }
 
+        query =  query + ` ORDER BY created_at ${sort}`
+
         const searchData = await pool.query(query);
         const datas = searchData.rows
 
@@ -61,9 +63,7 @@ const getAllUserFromDB = async (payload: any) => {
                }
         })
         )
-
-       
-
+        
         return findDataReporter
 };
 

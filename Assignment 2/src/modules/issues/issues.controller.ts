@@ -32,7 +32,7 @@ const getAllIssues = async(req : Request, res : Response) => {
         const result = await issuesService.getAllUserFromDB(data)
 
         sendResponse(res, {
-            statusCode: 201,
+            statusCode: 200,
             success: true,
             data: result
         })
@@ -54,7 +54,7 @@ const getIssuesById = async(req : Request, res : Response) => {
         const result = await issuesService.getSingleIssue(id)
 
         sendResponse(res, {
-            statusCode: 201,
+            statusCode: 200,
             success: true,
             data: result
         })
@@ -78,7 +78,7 @@ const updateIssuesById = async(req : Request, res : Response) => {
         const result = await issuesService.updateIssue(decoded, id, updateData)
 
         sendResponse(res, {
-            statusCode: 201,
+            statusCode: 200,
             success: true,
             message: 'Issue updated successfully',
             data: result.rows[0]
@@ -100,7 +100,7 @@ const deleteIssueById = async(req : Request, res : Response) => {
         const result = await issuesService.deleteIssueFromDB(id)
 
         sendResponse(res, {
-            statusCode: 201,
+            statusCode: 200,
             success: true,
             message: 'Issue Deleted successfully',
             data: result
