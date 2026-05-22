@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import jwt, { type JwtPayload } from 'jsonwebtoken'
 import config from "../config";
 import { pool } from "../db";
+import sendResponse from "../utility/sendResponse";
 
 export const authVerify = (...roles: string[]) =>async (req: Request,res: Response,next: NextFunction) => {
    
@@ -9,16 +10,28 @@ export const authVerify = (...roles: string[]) =>async (req: Request,res: Respon
         const token = req.headers.authorization
 
           if (!token) {
-        res.status(401).json({
-          success: false,
-          message: "Unauthorized access!!",
-        });
+
+            sendResponse(res, {
+              statusCode: 401,
+              success: false,
+              message: 'Unauthorized access',
+
+            })
       }
 
       const decoded = jwt.verify(
         token as string,
         config.jwtSecret as string,
       ) as JwtPayload;
+
+      if(!roles.includes(decoded.role)){
+        sendResponse(res, {
+              statusCode: 401,
+              success: false,
+              message: 'Unauthorized access',
+
+            })
+      }
 
 
       const userData = await pool.query(
@@ -28,11 +41,14 @@ export const authVerify = (...roles: string[]) =>async (req: Request,res: Respon
         [decoded.email],
       );
 
+      console.log(userData, decoded)
       if (userData.rows.length === 0) {
-        res.status(404).json({
-          success: false,
-          message: "User not found!",
-        });
+        sendResponse(res, {
+              statusCode: 404,
+              success: false,
+              message: 'User not found',
+
+            })
       }
 
       req.user = decoded

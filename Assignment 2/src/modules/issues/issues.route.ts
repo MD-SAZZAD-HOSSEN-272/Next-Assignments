@@ -4,6 +4,7 @@ import { authVerify } from "../../middleware/auth";
 
 const route = Router()
 
-route.post('/', authVerify('admin', 'user'), issuesController.createIssues)
+route.post('/', authVerify('contributor', 'maintainer'), issuesController.createIssues)
+route.get('/', issuesController.getAllIssues)
 
 export const issuesRoute = route
