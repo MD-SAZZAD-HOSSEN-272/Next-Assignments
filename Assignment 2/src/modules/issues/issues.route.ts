@@ -8,5 +8,6 @@ route.post('/', authVerify('contributor', 'maintainer'), issuesController.create
 route.get('/', issuesController.getAllIssues)
 route.get('/:id', issuesController.getIssuesById)
 route.patch('/:id', authVerify('contributor', 'maintainer'), issuesController.updateIssuesById)
+route.delete('/:id', authVerify('maintainer'), issuesController.deleteIssueById)
 
 export const issuesRoute = route

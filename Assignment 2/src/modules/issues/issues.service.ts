@@ -71,9 +71,10 @@ const getAllUserFromDB = async (payload: any) => {
 const getSingleIssue = async(paylad : any) => {
     const id = paylad;
 
+
     const result = await pool.query(`
-            SELECT * FROM issues ORDER BY ${id} LIMIT 1
-        `)
+            SELECT * FROM issues WHERE id=$1
+        `, [id])
 
         const reporterId = result.rows[0].reporter_id;
 
@@ -148,9 +149,21 @@ const updateIssue = async(payload : any, id : any, updateData : IIssues) => {
 
 }
 
+
+const deleteIssueFromDB = async(id : any) => {
+    
+    const result = await pool.query(`
+             DELETE FROM issues
+             WHERE id = $1
+        `, [id])
+
+    return result
+}
+
 export const issuesService = {
     createIssueIntoDB,
     getAllUserFromDB,
     getSingleIssue,
     updateIssue,
+    deleteIssueFromDB
 }
