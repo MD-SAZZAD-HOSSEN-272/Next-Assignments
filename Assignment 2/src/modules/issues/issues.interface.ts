@@ -4,3 +4,9 @@ export interface IIssues {
     type : string
     data : any
 }
+
+export interface IQuery {
+    sort? : string;
+    type? : string;
+    status? : string
+}

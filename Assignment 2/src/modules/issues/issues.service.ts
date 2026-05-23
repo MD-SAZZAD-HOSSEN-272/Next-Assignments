@@ -1,7 +1,9 @@
 
+import type { JwtPayload } from "jsonwebtoken";
 import { pool } from "../../db";
 import sendResponse from "../../utility/sendResponse";
-import type { IIssues } from "./issues.interface";
+import type { IUsers } from "../users/users.interface";
+import type { IIssues, IQuery } from "./issues.interface";
 
 const createIssueIntoDB = async(payload : IIssues) => {
     const {title, description, type, data} = payload;
@@ -12,7 +14,7 @@ const createIssueIntoDB = async(payload : IIssues) => {
         return result
 }
 
-const getAllIssuesFromDB = async (payload: any) => {
+const getAllIssuesFromDB = async (payload: IQuery) => {
 
         let sort = "DESC";
 
@@ -68,7 +70,7 @@ const getAllIssuesFromDB = async (payload: any) => {
 };
 
 
-const getSingleIssue = async(paylad : any) => {
+const getSingleIssue = async(paylad : string) => {
     const id = paylad;
 
 
@@ -98,7 +100,7 @@ const getSingleIssue = async(paylad : any) => {
 }
 
 
-const updateIssue = async(payload : any, id : any, updateData : IIssues) => {
+const updateIssue = async(payload : JwtPayload, id : string, updateData : IIssues) => {
    
     const decodedUser = payload;
     const issueId = id;
@@ -150,7 +152,7 @@ const updateIssue = async(payload : any, id : any, updateData : IIssues) => {
 }
 
 
-const deleteIssueFromDB = async(id : any) => {
+const deleteIssueFromDB = async(id : string) => {
     
     const result = await pool.query(`
              DELETE FROM issues

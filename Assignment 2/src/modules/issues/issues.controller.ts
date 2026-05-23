@@ -52,11 +52,16 @@ const getIssuesById = async(req : Request, res : Response) => {
         try {
         const {id} = req.params
 
+        if (!id || Array.isArray(id)) {
+        throw new Error("Invalid ID");
+        }
+
         const result = await issuesService.getSingleIssue(id)
 
         sendResponse(res, {
             statusCode: 200,
             success: true,
+            message: 'Issues retrived successfully',
             data: result
         })
     } catch (error : any) {
@@ -74,7 +79,16 @@ const updateIssuesById = async(req : Request, res : Response) => {
     try {
         const decoded = req.user
         const {id} = req.params
+
+        if (!id || Array.isArray(id)) {
+        throw new Error("Invalid ID");
+        }
+
         const updateData = req.body;
+
+        if (!decoded) {
+        throw new Error("Unauthorized");
+        }
 
         const result = await issuesService.updateIssue(decoded, id, updateData)
 
@@ -97,6 +111,10 @@ const updateIssuesById = async(req : Request, res : Response) => {
 const deleteIssueById = async(req : Request, res : Response) => {
     try {
         const {id} = req.params
+
+        if (!id || Array.isArray(id)) {
+        throw new Error("Invalid ID");
+        }
 
         const result = await issuesService.deleteIssueFromDB(id)
 
