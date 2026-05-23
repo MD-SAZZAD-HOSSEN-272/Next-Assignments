@@ -29,11 +29,12 @@ const getAllIssues = async(req : Request, res : Response) => {
         try {
         const data = req.query
 
-        const result = await issuesService.getAllUserFromDB(data)
+        const result = await issuesService.getAllIssuesFromDB(data)
 
         sendResponse(res, {
             statusCode: 200,
             success: true,
+            message: 'Issues retrived successfully',
             data: result
         })
     } catch (error : any) {

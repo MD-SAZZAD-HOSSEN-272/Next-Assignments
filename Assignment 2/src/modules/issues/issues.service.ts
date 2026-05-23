@@ -12,7 +12,7 @@ const createIssueIntoDB = async(payload : IIssues) => {
         return result
 }
 
-const getAllUserFromDB = async (payload: any) => {
+const getAllIssuesFromDB = async (payload: any) => {
 
         let sort = "DESC";
 
@@ -126,7 +126,7 @@ const updateIssue = async(payload : any, id : any, updateData : IIssues) => {
     throw new Error("Issue not found");
   }
 
-        if(user.id === issue.reporter_id || user.role === 'maintainer'){
+        if((user.id === issue.reporter_id && issue.status === 'open') || user.role === 'maintainer'){
             const result = await pool.query(`
                     UPDATE issues
                     SET
@@ -162,7 +162,7 @@ const deleteIssueFromDB = async(id : any) => {
 
 export const issuesService = {
     createIssueIntoDB,
-    getAllUserFromDB,
+    getAllIssuesFromDB,
     getSingleIssue,
     updateIssue,
     deleteIssueFromDB

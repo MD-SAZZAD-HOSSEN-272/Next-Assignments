@@ -219,7 +219,7 @@ var createIssueIntoDB = async (payload) => {
         `, [title, description, type, data.id]);
   return result;
 };
-var getAllUserFromDB = async (payload) => {
+var getAllIssuesFromDB = async (payload) => {
   let sort = "DESC";
   if (payload.sort === "oldest") {
     sort = "ASC";
@@ -296,7 +296,7 @@ var updateIssue = async (payload, id, updateData) => {
   if (!issue) {
     throw new Error("Issue not found");
   }
-  if (user.id === issue.reporter_id || user.role === "maintainer") {
+  if (user.id === issue.reporter_id && issue.status === "open" || user.role === "maintainer") {
     const result = await pool.query(`
                     UPDATE issues
                     SET
@@ -321,7 +321,7 @@ var deleteIssueFromDB = async (id) => {
 };
 var issuesService = {
   createIssueIntoDB,
-  getAllUserFromDB,
+  getAllIssuesFromDB,
   getSingleIssue,
   updateIssue,
   deleteIssueFromDB
@@ -350,10 +350,11 @@ var createIssues = async (req, res) => {
 var getAllIssues = async (req, res) => {
   try {
     const data = req.query;
-    const result = await issuesService.getAllUserFromDB(data);
+    const result = await issuesService.getAllIssuesFromDB(data);
     sendResponse_default(res, {
       statusCode: 200,
       success: true,
+      message: "Issues retrived successfully",
       data: result
     });
   } catch (error) {
