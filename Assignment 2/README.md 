@@ -7,7 +7,7 @@ A collaborative platform for software teams to report bugs, suggest features, an
 # Live URL
 
 ```bash
-https://your-live-url.com
+https://assignment-2-theta-tawny.vercel.app/
 ```
 
 ---
@@ -88,7 +88,7 @@ src/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/devpulse-api.git
+git clone https://github.com/MD-SAZZAD-HOSSEN-272/Next-Assignments
 ```
 
 ---
@@ -96,7 +96,7 @@ git clone https://github.com/your-username/devpulse-api.git
 ## 2. Move into the Project Directory
 
 ```bash
-cd devpulse-api
+cd 'assignment 2'
 ```
 
 ---
